@@ -25,12 +25,12 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "ForwardSo\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "App\\Tests\\": "tests/"
+            "ForwardSo\\Tests\\": "tests/"
         }
     },
     "replace": {
