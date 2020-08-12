@@ -9,9 +9,14 @@ final class GenerateTest extends WebTestCase
 {
     public function testRequestToGenerateUrlResponseWithSuccess()
     {
+        $url = "https://google.com";
         $client = static::createClient();
-        $client->request('POST', '/generate', [], [], [], json_encode(["url" => "https://google.com"]));
+        $client->request('POST', '/generate', [], [], [], json_encode(["url" => $url]));
         $this->assertEquals(201, $client->getResponse()->getStatusCode());
+
+        $content = json_decode($client->getResponse()->getContent());
+        $this->assertEquals($url, $content->original);
+        $this->assertNotEquals($url, $content->generated);
     }
 
     public function testRequestFailingWithMissingUrlOnBody()
@@ -21,6 +26,6 @@ final class GenerateTest extends WebTestCase
         $this->assertEquals(400, $client->getResponse()->getStatusCode());
 
         $content = json_decode($client->getResponse()->getContent());
-        $this->assertEquals($content->message, "Missing URL on body.");
+        $this->assertEquals("Missing URL on body.", $content->message);
     }
 }
